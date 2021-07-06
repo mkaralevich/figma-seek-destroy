@@ -1,0 +1,41 @@
+Area:
+⊙ On page
+⊙ Whithin selection
+
+---
+
+Detach:
+⊙ All components
+	⊙ Main components
+	⊙ Instances
+
+---
+
+Remove styles:
+☑ All styles
+	☑ Text
+	☑ Stroke
+	☑ Fill
+	☑ Effect
+	☑ Grid
+
+---
+
+Exclude pattern:
+[ Input ]
+
+---
+
+API:
+<component>.createInstance() :InstanceNode
+<instance>.detachInstance(): FrameNode
+<node>.remove(): void
+<node>.textStyleId
+<node>.strokeStyleId
+<node>.effectStyleId
+<node>.fillStyleId
+<node>.gridStyleId
+
+id: "17:27"
+x:0
+y:0
