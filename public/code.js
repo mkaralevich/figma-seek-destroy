@@ -10,9 +10,13 @@ figma.ui.onmessage = (msg) => {
             if (Array.isArray(nodes)) {
                 return nodes.map((child) => {
                     if (child.type === "INSTANCE" && !child.removed) {
-                        console.log("detached");
-                        child.detachInstance();
-                        // if (detached.children) destroyComps(detached.children);
+                        const detached = child.detachInstance();
+                        if (detached.children)
+                            destroyComps(detached.children);
+                    }
+                    if (child.type !== "INSTANCE" && child.type !== "COMPONENT") {
+                        if (child.children)
+                            destroyComps(child.children);
                     }
                     // If Component
                     // if (child.type === "COMPONENT" && !child.removed) {
@@ -38,7 +42,9 @@ figma.ui.onmessage = (msg) => {
                 node.fillStyleId = "";
                 node.strokeStyleId = "";
             }
-            if (node.type === "FRAME") {
+            if (node.type === "FRAME" ||
+                node.type === "INSTANCE" ||
+                node.type === "COMPONENT") {
                 node.gridStyleId = "";
                 node.effectStyleId = "";
                 node.fillStyleId = "";
@@ -55,9 +61,7 @@ figma.ui.onmessage = (msg) => {
                 node.fillStyleId = "";
                 node.strokeStyleId = "";
             }
-            if (node.type === "GROUP" ||
-                node.type === "INSTANCE" ||
-                node.type === "COMPONENT")
+            if (node.type === "GROUP")
                 return null;
         };
         function removeStyles(nodes) {
@@ -73,3 +77,4 @@ figma.ui.onmessage = (msg) => {
     }
     // figma.closePlugin();
 };
+//# sourceMappingURL=code.js.map
