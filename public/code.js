@@ -1,16 +1,16 @@
 'use strict';
 
-figma.showUI(__html__, { width: 232 });
+figma.showUI(__html__, { width: 320 });
 figma.ui.onmessage = (msg) => {
     if (msg.type === "destroy-components") {
         const selection = [...figma.currentPage.selection];
-        // let instances: SceneNode[] = [];
-        // let components: SceneNode[] = [];
+        let updatedSelection = [];
         function destroyComps(nodes) {
             if (Array.isArray(nodes)) {
                 return nodes.map((child) => {
                     if (child.type === "INSTANCE" && !child.removed) {
                         const detached = child.detachInstance();
+                        updatedSelection = [...updatedSelection, detached];
                         if (detached.children)
                             destroyComps(detached.children);
                     }
@@ -19,19 +19,23 @@ figma.ui.onmessage = (msg) => {
                             destroyComps(child.children);
                     }
                     // If Component
-                    // if (child.type === "COMPONENT" && !child.removed) {
-                    // 	const parent = figma.currentPage.findOne(
-                    // 		(n) => n.id === child.parentId
-                    // 	);
-                    // 	const copy = child.createInstance();
-                    // 	copy.x = child.x;
-                    // 	copy.y = child.y;
-                    // 	console.log(parent);
-                    // }
+                    if (child.type === "COMPONENT" && !child.removed) {
+                        const parent = figma.currentPage.findOne((n) => n.id === child.parentId);
+                        const childProps = {
+                            parentId: child.parentId,
+                            x: child.x,
+                            y: child.y,
+                        };
+                        const copy = child.createInstance();
+                        copy.x = childProps.x;
+                        copy.y = childProps.y;
+                        parent.insertChild(copy);
+                    }
                 });
             }
         }
         destroyComps(selection);
+        figma.currentPage.selection = updatedSelection;
     }
     if (msg.type === "unstyle-elements") {
         const selection = [...figma.currentPage.selection];
@@ -77,4 +81,3 @@ figma.ui.onmessage = (msg) => {
     }
     // figma.closePlugin();
 };
-//# sourceMappingURL=code.js.map
