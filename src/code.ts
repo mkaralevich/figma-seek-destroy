@@ -16,25 +16,6 @@ figma.ui.onmessage = (msg) => {
 					if (child.type !== "INSTANCE" && child.type !== "COMPONENT") {
 						if (child.children) destroyComps(child.children);
 					}
-
-					// If Component
-					if (child.type === "COMPONENT" && !child.removed) {
-						const parent = figma.currentPage.findOne(
-							(n) => n.id === child.parentId
-						);
-						const childProps = {
-							parentId: child.parentId,
-							x: child.x,
-							y: child.y,
-						};
-
-						const copy = child.createInstance();
-
-						copy.x = childProps.x;
-						copy.y = childProps.y;
-
-						parent.insertChild(copy);
-					}
 				});
 			}
 		}
