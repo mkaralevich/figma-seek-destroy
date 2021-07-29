@@ -26,12 +26,15 @@
 
 </script>
 
-<div class="wrapper p-xxsmall">
-	<!-- <Label>Exclude pattern</Label> -->
-	<!-- <Input bind:value={pattern} class="mb-xxsmall" /> -->
-	<div class="flex p-xxsmall mb-xsmall">
-		<Button on:click={cancel} variant="secondary" class="mr-xsmall">Cancel</Button>
-		<Button on:click={destroyComps} class="mr-xsmall">Destroy</Button>
-		<Button on:click={unstyleEls}>Unstyle</Button>
+<style>
+	.flex-gap {
+		gap: 8px
+	}
+</style>
+
+<div class="wrapper p-xsmall">
+	<div class="flex p-xxsmall mb-xsmall flex-grow flex-gap">
+		<Button on:click={destroyComps} class="justify-content-center flex-grow">Destroy Instances</Button>
+		<Button on:click={unstyleEls} class="justify-content-center flex-grow">Unstyle Layers</Button>
 	</div>
 </div>
