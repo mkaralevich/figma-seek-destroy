@@ -1,4 +1,4 @@
-figma.showUI(__html__, { width: 320 });
+figma.showUI(__html__, { width: 320, height: 200 });
 
 figma.ui.onmessage = (msg) => {
 	if (msg.type === "destroy-components") {
