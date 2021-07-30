@@ -1,6 +1,6 @@
 'use strict';
 
-figma.showUI(__html__, { width: 320, height: 80 });
+figma.showUI(__html__, { width: 320, height: 96 });
 figma.ui.onmessage = (msg) => {
     if (msg.type === "destroy-components") {
         const selection = [...figma.currentPage.selection];

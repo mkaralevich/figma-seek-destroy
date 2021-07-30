@@ -1,4 +1,7 @@
-> Seek & Destroy. Detach instances and unstyles layers.
+> Seek & Destroy. Detach instances and unstyle layers in selection.
 
-- Make selection
-- Choose option
+- Detaches all nested instances
+- Doesn't destroy components
+- Removes all styles from the layer
+
+Start fresh or archive.

@@ -1,6 +1,6 @@
 {
-	"name": "Seek and Destroy",
-	"id": "795096273369409539",
+	"name": "Util: Seek and Destroy",
+	"id": "1002696113544894116",
 	"api": "1.0.0",
 	"main": "code.js",
 	"ui": "index.html"
