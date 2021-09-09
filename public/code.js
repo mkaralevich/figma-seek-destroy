@@ -6,13 +6,14 @@ figma.ui.onmessage = (msg) => {
         const selection = [...figma.currentPage.selection];
         if (selection.length === 0)
             figma.notify(`Please select layers first`);
-        let updatedSelection = [];
+        let instanceSelection = [];
+        let componentSelection = [];
         function destroyComps(nodes) {
             if (Array.isArray(nodes)) {
                 return nodes.map((child) => {
                     if (child.type === "INSTANCE" && !child.removed) {
                         const detached = child.detachInstance();
-                        updatedSelection = [...updatedSelection, detached];
+                        instanceSelection = [...instanceSelection, detached];
                         if (detached.children)
                             destroyComps(detached.children);
                     }
@@ -20,21 +21,29 @@ figma.ui.onmessage = (msg) => {
                         if (child.children)
                             destroyComps(child.children);
                     }
+                    if (child.type === "COMPONENT") {
+                        componentSelection = [...componentSelection, child];
+                    }
                 });
             }
         }
         destroyComps(selection);
-        const message = () => {
-            const instances = updatedSelection.length;
+        const instanceMessage = () => {
+            const components = componentSelection.length;
+            const instances = instanceSelection.length;
+            const plural = (arr) => (arr <= 1 ? "" : "s");
+            if (instances === 0 && components >= 1)
+                return `${components} component${plural(components)} found`;
+            if (instances >= 1 && components >= 1) {
+                return `❏  ${instances} instance${plural(instances)} detached, ${components} component${plural(components)} found`;
+            }
+            if (instances >= 1)
+                return `❏  ${instances} instance${plural(instances)} detached`;
             if (instances === 0)
                 return `Nothing to destroy here`;
-            if (instances === 1)
-                return `❏  ${instances} instance was detached`;
-            if (instances >= 1)
-                return `❏  ${instances} instances were detached`;
         };
-        figma.notify(message());
-        figma.currentPage.selection = updatedSelection;
+        figma.notify(instanceMessage());
+        figma.currentPage.selection = instanceSelection;
     }
     if (msg.type === "unstyle-elements") {
         const selection = [...figma.currentPage.selection];
@@ -107,3 +116,4 @@ figma.ui.onmessage = (msg) => {
     }
     // figma.closePlugin();
 };
+//# sourceMappingURL=code.js.map
