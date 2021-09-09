@@ -35,9 +35,10 @@ figma.ui.onmessage = (msg) => {
 				return `${components} component${plural(components)} found`;
 
 			if (instances >= 1 && components >= 1) {
-				return `❏  ${instances} instance${plural(
-					instances
-				)} detached, ${components} component${plural(components)} found`;
+				return (
+					`❏  ${instances} instance${plural(instances)} detached` +
+					`, ${components} component${plural(components)} found`
+				);
 			}
 
 			if (instances >= 1)

@@ -35,7 +35,8 @@ figma.ui.onmessage = (msg) => {
             if (instances === 0 && components >= 1)
                 return `${components} component${plural(components)} found`;
             if (instances >= 1 && components >= 1) {
-                return `❏  ${instances} instance${plural(instances)} detached, ${components} component${plural(components)} found`;
+                return (`❏  ${instances} instance${plural(instances)} detached` +
+                    `, ${components} component${plural(components)} found`);
             }
             if (instances >= 1)
                 return `❏  ${instances} instance${plural(instances)} detached`;
@@ -116,4 +117,3 @@ figma.ui.onmessage = (msg) => {
     }
     // figma.closePlugin();
 };
-//# sourceMappingURL=code.js.map
